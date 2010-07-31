@@ -4,7 +4,13 @@ require 'oauth'
 require 'grackle'
 require 'erb'
 
+require 'lib/fetcher'
+
 enable :sessions
+
+configure do
+  $fetcher = Fetcher.new
+end
 
 CONSUMER_KEY = 'QhV4TkQXmvobR8AitgM3DQ'
 CONSUMER_SECRET = 'G1VaU1zJpWsENw00ucJQoI9vF0lUObEQgmQwNGqUQA'
@@ -67,7 +73,8 @@ end
 
 
 get '/list' do
-  @client = get_client
+  @list = $fetcher.get(get_client, 'christine_y')
+
   erb :list
 end
 
@@ -75,8 +82,6 @@ end
 get '/hi' do
   erb :index
 end
-
-
 
 
 
